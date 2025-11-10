@@ -1,81 +1,70 @@
-import { Link, NavLink } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-import { FaPaw } from "react-icons/fa";
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { MdPets } from "react-icons/md";
+import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
 
-  const navLinks = (
+  // ❌ const { user } = use(AuthContext)
+  // ✅ সঠিকটা নিচে
+  const { user } = useContext(AuthContext);
+
+  const links = (
     <>
-      <li><NavLink to="/" className="hover:text-primary">Home</NavLink></li>
-      <li><NavLink to="/pets-and-supplies" className="hover:text-primary">Pets & Supplies</NavLink></li>
-      {user && (
-        <>
-          <li><NavLink to="/add-listing" className="hover:text-primary">Add Listing</NavLink></li>
-          <li><NavLink to="/my-listings" className="hover:text-primary">My Listings</NavLink></li>
-          <li><NavLink to="/my-orders" className="hover:text-primary">My Orders</NavLink></li>
-        </>
-      )}
+      <li className='font-semibold hover:text-indigo-500 hover:bg-indigo-50'>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li className='font-semibold hover:text-indigo-500 hover:bg-indigo-50'>
+        <NavLink to="/pets&Supplies">Pets & Supplies</NavLink>
+      </li>
     </>
   );
 
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0 z-50">
+    <div className='bg-indigo-50 shadow-lg'>
       <div className="navbar container mx-auto">
-        {/* Left: Logo + Name */}
-        <div className="flex-1">
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold">
-            <FaPaw className="text-primary text-2xl" />
-            <span className="text-gray-800">PawMart</span>
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> 
+              </svg>
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              {links}
+            </ul>
+          </div>
+          <Link to="/" className="text-5xl font-bold text-indigo-500 flex gap-1 hover:text-indigo-700">
+            <MdPets /> PawMart
           </Link>
         </div>
 
-        {/* Middle: Menu */}
-        <div className="hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-medium">
-            {navLinks}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            {links}
           </ul>
         </div>
 
-        {/* Right: Auth Buttons or Profile */}
-        <div className="flex-none">
-          {user ? (
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full border border-primary">
-                  <img src={user.photoURL || "https://i.ibb.co/0Jmshvb/user.png"} alt="profile" />
-                </div>
-              </label>
-              <ul tabIndex={0} className="mt-3 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
-                <li className="text-center font-semibold">{user.displayName || "User"}</li>
-                <li><button onClick={logout} className="text-error">Logout</button></li>
-              </ul>
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <Link to="/login" className="btn btn-outline btn-sm">Login</Link>
-              <Link to="/register" className="btn btn-primary btn-sm">Register</Link>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile Menu */}
-        <div className="dropdown dropdown-end lg:hidden">
-          <label tabIndex={0} className="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16" /></svg>
-          </label>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            {navLinks}
-            {!user && (
+        <div className="navbar-end space-x-3">
+          {
+            user ? (
+              <button className="btn px-5 bg-indigo-500 text-white hover:text-black hover:bg-indigo-700">
+                Sign Out
+              </button>
+            ) : (
               <>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li>
+                <NavLink to="/login" className="btn px-5 bg-indigo-500 text-white hover:text-black hover:bg-indigo-700">
+                  Login
+                </NavLink>
+                <NavLink to="/register" className="btn bg-indigo-500 text-white hover:text-black hover:bg-indigo-700">
+                  Register
+                </NavLink>
               </>
-            )}
-          </ul>
+            )
+          }
         </div>
       </div>
     </div>
