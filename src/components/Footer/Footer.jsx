@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="bg-indigo-50 text-gray-800 py-1">
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 px-6 mt-10">
-        <div className="">
+        <div className="text-center lg: text-left">
           <Link to="/" className="text-4xl font-bold text-indigo-600 flex gap-1 hover:text-indigo-700 items-center">
             <MdPets size={30}/> PawMart
           </Link>

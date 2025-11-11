@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaPaw, FaBone, FaShoppingBag, FaMedkit } from "react-icons/fa";
 import RecentListings from "../components/RecentListings";
+import AddListing from "./AddListing";
 
 const banners = [
   "https://i.ibb.co/YBwDYqK3/banner1.jpg",
@@ -138,7 +139,7 @@ const Home = () => {
       </div>
 
       {/* Pet Heroes section */}
-      <div className="my-30 container mx-auto px-4 mb-80">
+      <div className="my-20 container mx-auto px-4 mb-50">
         <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">Meet Our Pet Heroes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {petHeroes.map((hero, index) => (
@@ -154,7 +155,9 @@ const Home = () => {
           ))}
         </div>
       </div>
-      
+      {
+        <AddListing></AddListing>
+      }
     </div>
   );
 };

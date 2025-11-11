@@ -6,6 +6,8 @@ import Login from "../pages/Login"
 import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
 import ProductDetails from "../pages/ProductDetails";
+import AddListing from "../pages/AddListing";
+import ListingDetails from "../pages/ListingDetails";
 
 
 const router = createBrowserRouter([
@@ -23,9 +25,17 @@ const router = createBrowserRouter([
           element: <Login></Login>
         },
         {
-          path:"/product/:id",
+          path: "/product/:id",
           element: <ProductDetails></ProductDetails>
 
+        },
+        {
+          path: "/listing-details/:id",
+          element: <ListingDetails></ListingDetails>
+        },
+        {
+          path: "/add-listing",
+          element: <AddListing></AddListing>
         },
         {
           path: "/register",
