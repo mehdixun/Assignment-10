@@ -4,12 +4,15 @@ import Home from "../pages/Home";
 import HomeLayout from "../layout/HomeLayout";
 import Login from "../pages/Login"
 import Register from "../pages/Register";
+import ErrorPage from "../pages/ErrorPage";
+import ProductDetails from "../pages/ProductDetails";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children:[
         {
             index: true,
@@ -20,9 +23,15 @@ const router = createBrowserRouter([
           element: <Login></Login>
         },
         {
+          path:"/product/:id",
+          element: <ProductDetails></ProductDetails>
+
+        },
+        {
           path: "/register",
           element: <Register></Register>
-        }
+        },
+        
     ]
   },
 ]);
