@@ -8,7 +8,9 @@ const MyListings = () => {
 
   // Fetch user listings
   useEffect(() => {
-    fetch(`http://localhost:3000/products?email=${user?.email}`)
+    if (!user?.email) return;
+
+    fetch(`http://localhost:3000/products?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setListings(data))
       .catch((err) => console.error(err));
@@ -38,53 +40,43 @@ const MyListings = () => {
       <h2 className="text-3xl font-bold text-indigo-600 mb-6">My Listings</h2>
 
       {listings.length === 0 ? (
-        <p className="text-center text-gray-500">No listings found.</p>
+        <p className="text-center text-gray-500">You have not added any listings yet.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table w-full border">
-            <thead className="bg-indigo-100">
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Location</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listings.map((item) => (
-                <tr key={item._id} className="hover:bg-indigo-50">
-                  <td>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-16 w-16 object-cover rounded"
-                    />
-                  </td>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>
-                    {item.price && item.price > 0
-                      ? `৳${item.price}`
-                      : "Free for Adoption"}
-                  </td>
-                  <td>{item.location}</td>
-                  <td className="space-x-2">
-                    {/* Edit button */}
-                    <button className="btn btn-sm btn-primary">Edit</button>
-                    {/* Delete button */}
-                    <button
-                      className="btn btn-sm btn-error"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {listings.map((item) => (
+            <div
+              key={item._id}
+              className="card bg-indigo-50 shadow-lg rounded-xl hover:scale-105 transition-transform duration-300"
+            >
+              <figure className="overflow-hidden rounded-t-xl">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-48 w-full object-cover"
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title text-xl font-bold">{item.name}</h2>
+                <p className="text-gray-500 font-medium">Category: {item.category}</p>
+                <p className="text-indigo-600 font-semibold">
+                  {item.price && item.price > 0
+                    ? `৳${item.price}`
+                    : "Free for Adoption"}
+                </p>
+                <p className="text-gray-400 text-sm mt-1">📍 {item.location}</p>
+
+                <div className="card-actions justify-end mt-4 space-x-2">
+                  <button className="btn btn-sm btn-primary">Edit</button>
+                  <button
+                    className="btn btn-sm btn-error"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
