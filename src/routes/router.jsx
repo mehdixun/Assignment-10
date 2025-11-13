@@ -17,7 +17,6 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 
 
-// 🧠 Layout Wrapper with Toast
 const HomeLayoutWithToast = () => (
   <>
     <HomeLayout />
@@ -81,7 +80,6 @@ const router = createBrowserRouter([
         element: <MyListing></MyListing>,
       },
 
-      // ✅ New category filtered product route
       {
         path: "/category-filtered-product/:categoryName",
         element: <CategoryFilteredProduct></CategoryFilteredProduct>,

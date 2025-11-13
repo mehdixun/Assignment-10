@@ -17,7 +17,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Register user + update profile
   const createUser = async (email, password, name, photoURL) => {
     setLoading(true);
     try {
@@ -51,7 +50,6 @@ const AuthProvider = ({ children }) => {
     return signOut(auth).finally(() => setLoading(false));
   };
 
-  // ✅ Auth state observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
+
 const Register = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Password validationn
   const validatePassword = (password) => {
     if (!/[A-Z]/.test(password)) return "Password must have an uppercase letter.";
     if (!/[a-z]/.test(password)) return "Password must have a lowercase letter.";
@@ -33,23 +35,23 @@ const Register = () => {
 
     try {
       await createUser(formData.email, formData.password, formData.name, formData.photo);
-      toast.success("✅ Registration successful!");
+      toast.success("Registration successful!");
       setFormData({ name: "", email: "", password: "", photo: "" });
       navigate("/");
     } catch (err) {
       console.error(err);
-      toast.error("❌ Registration failed!");
+      toast.error("Registration failed!");
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      toast.success("✅ Registered with Google!");
+      toast.success("Registered with Google!");
       navigate("/");
     } catch (err) {
       console.error(err);
-      toast.error("❌ Google sign-in failed!");
+      toast.error("Google sign-in failed!");
     }
   };
 
@@ -103,19 +105,42 @@ const Register = () => {
           </button>
         </form>
 
+        <button
+          onClick={handleGoogleSignIn}
+          className="btn w-full mt-4 bg-white text-black border border-gray-300 flex items-center justify-center gap-2 hover:scale-105 transition"
+        >
+          <svg
+            aria-label="Google logo"
+            width="20"
+            height="20"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <g>
+              <path d="M0 0H512V512H0z" fill="#fff" />
+              <path
+                fill="#34a853"
+                d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+              />
+              <path
+                fill="#4285f4"
+                d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+              />
+              <path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73" />
+              <path
+                fill="#ea4335"
+                d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+              />
+            </g>
+          </svg>
+          Register with Google
+        </button>
         <p className="text-center mt-2">
           Already have an account?{" "}
           <Link to="/login" className="text-indigo-500 font-bold hover:underline">
             Sign in
           </Link>
         </p>
-
-        <button
-          onClick={handleGoogleSignIn}
-          className="btn w-full mt-4 bg-white text-black border border-gray-300"
-        >
-          Register with Google
-        </button>
       </div>
     </div>
   );

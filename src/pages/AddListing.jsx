@@ -23,7 +23,6 @@ const AddListing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Pets category price auto 0
     const payload = { ...formData };
     if (payload.category === "Pets") payload.price = 0;
 

@@ -1,5 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import toast, { Toaster } from "react-hot-toast";
+
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -7,49 +11,72 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-
     fetch(`http://localhost:3000/orders?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error(err));
   }, [user]);
 
+  const handleDownloadPDF = () => {
+    if (!orders.length) {
+      toast.error("No orders found to export!");
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("My Orders Report", 14, 15);
+    doc.setFontSize(11);
+    doc.text(`User: ${user?.email}`, 14, 22);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [["Product", "Price", "Status", "Date"]],
+      body: orders.map((o) => [
+        o.productName || "N/A",
+        o.price ? `Taka: ${o.price}` : "Free",
+        o.status || "Pending",
+        new Date(o.createdAt).toLocaleDateString(),
+      ]),
+    });
+
+    doc.save("My_Orders_Report.pdf");
+    toast.success("PDF Downloaded Successfully!");
+  };
+
   return (
-    <div className="my-20 px-5 container mx-auto ">
-      <h2 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
-        My Orders
-      </h2>
+    <div className="py-16 container mx-auto px-4 min-h-screen">
+      <Toaster position="top-center" />
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold text-indigo-600">My Orders</h2>
+        <button
+          onClick={handleDownloadPDF}
+          className="btn btn-primary hover:scale-105 transition"
+        >
+          📄 Download Report
+        </button>
+      </div>
 
       {orders.length === 0 ? (
-        <p className="text-center text-gray-500">No orders found 😕</p>
+        <p className="text-center text-gray-500 mt-10 text-lg">You have no orders yet.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table w-full bg-indigo-50 border-2 border-indigo-500">
-            <thead className="bg-indigo-200">
+          <table className="table w-full border">
+            <thead className="bg-indigo-100 text-indigo-700">
               <tr>
-                <th>Product Name</th>
-                <th>Buyer Name</th>
+                <th>Product</th>
                 <th>Price</th>
-                <th>Quantity</th>
-                <th>Address</th>
+                <th>Status</th>
                 <th>Date</th>
-                <th>Phone</th>
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
-                <tr key={order._id} className="hover:bg-indigo-50">
-                  <td>{order.productName}</td>
-                  <td>{order.name}</td>
-                  <td>
-                    {order.price && order.price > 0
-                      ? `৳${order.price}`
-                      : "Free for Adoption"}
-                  </td>
-                  <td>{order.quantity}</td>
-                  <td>{order.address}</td>
-                  <td>{order.date}</td>
-                  <td>{order.phone}</td>
+              {orders.map((o) => (
+                <tr key={o._id}>
+                  <td>{o.productName}</td>
+                  <td>{o.price ? `৳${o.price}` : "Free"}</td>
+                  <td>{o.status || "Pending"}</td>
+                  <td>{new Date(o.createdAt).toLocaleDateString("en-GB")}</td>
                 </tr>
               ))}
             </tbody>

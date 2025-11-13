@@ -19,11 +19,11 @@ const Login = () => {
     e.preventDefault();
     loginUser(formData.email, formData.password)
       .then(() => {
-        toast.success("🎉 Login successful!");
+        toast.success("Login successful!");
         navigate("/");
       })
       .catch((err) => {
-        console.error("❌ Login Error:", err);
+        console.error("Login Error:", err);
         toast.error("Login failed. Please check your credentials.");
       });
   };
@@ -32,12 +32,12 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        toast.success("🎉 Login successful!");
+        toast.success("Login successful!");
         navigate("/");
         console.log(result.user);
       })
       .catch((error) => {
-        console.error("❌ Google Sign-in Error:", error);
+        console.error("Google Sign-in Error:", error);
         toast.error("Google sign-in failed.");
       });
   };
@@ -82,13 +82,6 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-center mt-3">
-          Don’t have an account?{" "}
-          <Link className="text-indigo-500 font-bold hover:underline" to="/register">
-            Register
-          </Link>
-        </p>
-
         {/* Google Login */}
         <button
           onClick={handleGoogleSignIn}
@@ -120,6 +113,12 @@ const Login = () => {
           </svg>
           Login with Google
         </button>
+        <p className="text-center mt-3">
+          Don’t have an account?{" "}
+          <Link className="text-indigo-500 font-bold hover:underline" to="/register">
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );

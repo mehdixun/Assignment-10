@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
+
 const OrderModal = ({ listing, user, onClose }) => {
   const [formData, setFormData] = useState({
     name: user?.displayName || "",
@@ -31,14 +32,14 @@ const OrderModal = ({ listing, user, onClose }) => {
 
       const data = await res.json();
       if (data.insertedId) {
-        toast.success("✅ Order placed successfully!");
+        toast.success("Order placed successfully!");
         onClose();
       } else {
-        toast.error("❌ Failed to save order!");
+        toast.error("Failed to save order!");
       }
     } catch (err) {
       console.error(err);
-      toast.error("⚠️ Error placing order!");
+      toast.error("Error placing order!");
     }
   };
 

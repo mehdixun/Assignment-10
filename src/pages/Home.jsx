@@ -5,6 +5,7 @@ import RecentListings from "../components/RecentListings";
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 
+
 const banners = [
   "https://i.ibb.co/JRQYnsJy/Happy-owners.jpg",
   "https://i.ibb.co/S4Dj7J1B/Pets-adoptions.jpg",
