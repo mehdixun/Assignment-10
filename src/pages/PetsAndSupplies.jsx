@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const categoryMap = {
   All: "",
-  Pets: "Pets", // server will map Pets → Dog + Cat
+  Pets: "Pets",
   "Pet Food": "Pet Food",
   Accessories: "Accessories",
   "Pet Care Products": "Pet Care Products",
@@ -14,7 +14,6 @@ const PetsAndSupplies = () => {
   const [filterCategory, setFilterCategory] = useState("All");
   const [loading, setLoading] = useState(false);
 
-  // Fetch products based on category
   useEffect(() => {
     setLoading(true);
     const queryParam = categoryMap[filterCategory]
@@ -30,10 +29,9 @@ const PetsAndSupplies = () => {
   return (
     <div className="my-10 px-5 container mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8 text-indigo-600">
-        🐾 Pets & Supplies
+         Pets & Supplies
       </h2>
 
-      {/* Category Filters */}
       <div className="flex justify-center gap-4 mb-8 flex-wrap">
         {Object.keys(categoryMap).map((cat) => (
           <button
@@ -50,7 +48,7 @@ const PetsAndSupplies = () => {
         ))}
       </div>
 
-      {/* Listing Cards */}
+      {/* Cards */}
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : listings.length > 0 ? (
@@ -72,10 +70,10 @@ const PetsAndSupplies = () => {
                 <p className="text-gray-500 font-medium">
                   Category: {item.category}
                 </p>
-                <p className="text-gray-400 text-sm mt-1">📍 {item.location}</p>
+                <p className="text-gray-400 text-sm mt-1">Location: {item.location}</p>
                 <p className="text-indigo-600 font-semibold mt-1">
                   {item.price && item.price > 0
-                    ? `৳${item.price}`
+                    ? `Price: ${item.price}`
                     : "Free for Adoption"}
                 </p>
 

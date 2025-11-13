@@ -63,12 +63,12 @@ const Footer = () => {
         </div>
 
         {/* Contact & Social */}
-        <div className="text-center md:text-left">
+        <div className="text-center">
           <h3 className="text-lg font-bold mb-3">Contact</h3>
           <p className="text-gray-500 font-semibold">Email: pawmart@gmail.com</p>
           <p className="text-gray-500 font-semibold">Phone: 01336458100</p>
 
-          <div className="flex justify-center md:justify-start mt-4 gap-5">
+          <div className="flex justify-center mt-4 gap-5">
             <a
               href="#"
               className="text-indigo-600 hover:text-indigo-800 transform hover:scale-125 transition duration-200"

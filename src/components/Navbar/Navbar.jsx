@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdPets } from "react-icons/md";
-import { AuthContext } from "../../provider/AuthProvider";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const Navbar = () => {

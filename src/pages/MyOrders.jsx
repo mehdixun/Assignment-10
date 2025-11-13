@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../provider/AuthProvider";
+import { AuthContext } from "../context/AuthContext";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/orders?email=${user?.email}`)
+    if (!user?.email) return;
+
+    fetch(`http://localhost:3000/orders?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error(err));
@@ -14,10 +16,12 @@ const MyOrders = () => {
 
   return (
     <div className="my-20 px-5 container mx-auto">
-      <h2 className="text-3xl font-bold text-indigo-600 mb-6">My Orders</h2>
+      <h2 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
+        My Orders
+      </h2>
 
       {orders.length === 0 ? (
-        <p className="text-center text-gray-500">No orders found.</p>
+        <p className="text-center text-gray-500">No orders found 😕</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="table w-full border">

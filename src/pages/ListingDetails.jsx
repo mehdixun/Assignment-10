@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../provider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import OrderModal from "../components/OrderModal";
+import { AuthContext } from "../context/AuthContext";
 
 const ListingDetails = () => {
   const { user } = useContext(AuthContext);
@@ -22,7 +22,7 @@ const ListingDetails = () => {
   return (
     <div className="my-10 px-5 max-w-4xl mx-auto">
       <Toaster position="top-center" />
-      <div className="card lg:card-side bg-base-100 shadow-xl">
+      <div className="card lg:card-side hover:bg-indigo-100 bg-indigo-50 shadow-xl hover:scale-105 transition-transform duration-300 p-5">
         <figure>
           <img
             src={listing.image}

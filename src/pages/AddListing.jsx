@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../provider/AuthProvider.jsx";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 const AddListing = () => {
   const { user } = useContext(AuthContext);

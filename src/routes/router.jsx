@@ -11,12 +11,11 @@ import PrivateRoute from "../provider/PrivateRoute";
 import MyOrders from "../pages/MyOrders";
 import PetsAndSupplies from "../pages/PetsAndSupplies";
 import MyListing from "../pages/MyListings";
-import CategoryFilteredProduct from "../pages/CategoryFilteredProduct"; // <-- new
-
-// 🧩 Toastify Import
+import CategoryFilteredProduct from "../pages/CategoryFilteredProduct";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
+
 
 // 🧠 Layout Wrapper with Toast
 const HomeLayoutWithToast = () => (
@@ -42,7 +41,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home></Home> },
       { path: "/login", element: <Login></Login> },
-      { path: "/register", element: <Register></Register> },
+      { path: "/register", element: <Register>
+        <HomeLayoutWithToast></HomeLayoutWithToast>
+      </Register> },
 
       // 🔒 Private Routes
       {

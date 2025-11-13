@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../provider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 const MyListings = () => {
   const { user } = useContext(AuthContext);
@@ -50,7 +50,7 @@ const MyListings = () => {
           {listings.map((item) => (
             <div
               key={item._id}
-              className="card bg-white shadow-lg rounded-xl hover:shadow-2xl hover:scale-105 transition-transform duration-300"
+              className="card bg-indigo-50 hover:bg-indigo-100 shadow-lg rounded-xl hover:shadow-2xl hover:scale-105 transition-transform duration-300"
             >
               <figure className="overflow-hidden rounded-t-xl">
                 <img

@@ -3,12 +3,12 @@ import toast from "react-hot-toast";
 
 const OrderModal = ({ listing, user, onClose }) => {
   const [formData, setFormData] = useState({
-    buyerName: user.displayName || "",
-    email: user.email,
-    listingId: listing._id,
-    listingName: listing.name,
-    quantity: listing.category.toLowerCase() === "pet" ? 1 : 1,
-    price: listing.price || 0,
+    name: user?.displayName || "",
+    email: user?.email || "",
+    productId: listing?._id,
+    productName: listing?.name,
+    quantity: listing?.category?.toLowerCase() === "pet" ? 1 : 1,
+    price: listing?.price || 0,
     address: "",
     date: "",
     phone: "",
@@ -31,30 +31,36 @@ const OrderModal = ({ listing, user, onClose }) => {
 
       const data = await res.json();
       if (data.insertedId) {
-        toast.success("Order placed successfully!");
+        toast.success("✅ Order placed successfully!");
         onClose();
+      } else {
+        toast.error("❌ Failed to save order!");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to place order");
+      toast.error("⚠️ Error placing order!");
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg w-full max-w-lg relative">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-start z-50 overflow-y-auto py-20 px-4">
+      <div className="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-lg relative animate-fadeIn">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 btn btn-sm btn-circle"
+          className="absolute top-3 right-3 btn btn-sm btn-circle bg-gray-100 hover:bg-gray-200"
         >
           ✕
         </button>
-        <h2 className="text-2xl font-bold mb-4">Place Your Order</h2>
+
+        <h2 className="text-2xl font-bold mb-5 text-center text-indigo-600">
+          Place Your Order
+        </h2>
+
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
             type="text"
-            name="buyerName"
-            value={formData.buyerName}
+            name="name"
+            value={formData.name}
             readOnly
             className="input input-bordered w-full"
           />
@@ -67,15 +73,15 @@ const OrderModal = ({ listing, user, onClose }) => {
           />
           <input
             type="text"
-            name="listingId"
-            value={formData.listingId}
+            name="productId"
+            value={formData.productId}
             readOnly
             className="input input-bordered w-full"
           />
           <input
             type="text"
-            name="listingName"
-            value={formData.listingName}
+            name="productName"
+            value={formData.productName}
             readOnly
             className="input input-bordered w-full"
           />
@@ -122,7 +128,10 @@ const OrderModal = ({ listing, user, onClose }) => {
             onChange={handleChange}
             className="textarea textarea-bordered w-full"
           />
-          <button type="submit" className="btn btn-primary w-full mt-2">
+          <button
+            type="submit"
+            className="btn btn-primary w-full mt-3 bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
             Place Order
           </button>
         </form>
