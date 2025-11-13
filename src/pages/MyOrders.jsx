@@ -53,7 +53,7 @@ const MyOrders = () => {
           onClick={handleDownloadPDF}
           className="btn btn-primary hover:scale-105 transition"
         >
-          📄 Download Report
+         Download Report
         </button>
       </div>
 
@@ -74,7 +74,7 @@ const MyOrders = () => {
               {orders.map((o) => (
                 <tr key={o._id}>
                   <td>{o.productName}</td>
-                  <td>{o.price ? `৳${o.price}` : "Free"}</td>
+                  <td>{o.price ? `Taka: ${o.price}` : "Free"}</td>
                   <td>{o.status || "Pending"}</td>
                   <td>{new Date(o.createdAt).toLocaleDateString("en-GB")}</td>
                 </tr>
