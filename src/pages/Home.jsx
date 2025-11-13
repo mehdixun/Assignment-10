@@ -6,10 +6,10 @@ import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 
 const banners = [
-  "https://i.ibb.co/YBwDYqK3/banner1.jpg",
-  "https://i.ibb.co/hFWYf4mk/banner2.jpg",
-  "https://i.ibb.co/pr9vZnjG/banner3.jpg",
-];
+  "https://i.ibb.co/JRQYnsJy/Happy-owners.jpg",
+  "https://i.ibb.co/S4Dj7J1B/Pets-adoptions.jpg",
+  "https://i.ibb.co/B2LbJcHV/Petss.jpg"
+  ];
 
 const taglines = [
   "Find Your Furry Friend Today!",
@@ -56,8 +56,9 @@ const Home = () => {
 
   return (
     <div className="bg-base-200 pb-20">
-      {/* 🔥 Banner Section */}
-      <div className="relative container mx-auto mt-16 rounded-2xl shadow-2xl overflow-hidden h-[400px] md:h-[500px]">
+
+      {/* Banner Section */}
+      <div className="relative container mx-auto mt-4 rounded-2xl shadow-2xl overflow-hidden h-[400px] md:h-[500px]">
         {banners.map((img, index) => (
           <motion.div
             key={index}
@@ -92,10 +93,9 @@ const Home = () => {
           </motion.div>
         ))}
 
-        {/* Controls */}
         <button
           onClick={prevSlide}
-          className="absolute top-1/2 left-5 transform -translate-y-1/2 bg-indigo-500/70 text-white rounded-full p-2 hover:bg-indigo-700 z-20"
+          className="absolute top-1/2 left-5 transform -translate-y-1/2 bg-indigo-500 hover:scale-110 transition-transform text-white rounded-full p-2 hover:bg-indigo-700 z-20"
         >
           &#10094;
         </button>
@@ -106,21 +106,21 @@ const Home = () => {
           &#10095;
         </button>
 
-        {/* Dots */}
         <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
           {banners.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrent(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === current ? "bg-indigo-500 scale-125" : "bg-gray-400"
+                index === current ? "bg-indigo-600 scale-125" : "bg-gray-400"
               }`}
             />
           ))}
         </div>
       </div>
 
-      {/* 🐾 Category Section */}
+
+      {/* Category Section */}
       <div className="my-20 container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-indigo-600 mb-10">
           Explore Categories
@@ -143,10 +143,12 @@ const Home = () => {
         </div>
       </div>
 
-      {/* 🐶 Recent Listings */}
-      <RecentListings />
 
-      {/* ❤️ Why Adopt Section */}
+      {/* Recent Listings */}
+      <RecentListings></RecentListings>
+
+
+      {/* Why Adopt Section */}
       <div className="py-20 container mx-auto px-4 bg-indigo-50 p-10 rounded-xl shadow-lg mt-20">
         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Why Adopt from PawMart?
@@ -157,7 +159,7 @@ const Home = () => {
         </p>
       </div>
 
-      {/* 🦸 Pet Heroes */}
+      {/* Pet Heroes */}
       <div className="my-20 container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 mb-10 text-center">
           Meet Our Pet Heroes

@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const categoryMap = {
+  All: "",
+  Pets: "Pets", // server will map Pets → Dog + Cat
+  "Pet Food": "Pet Food",
+  Accessories: "Accessories",
+  "Pet Care Products": "Pet Care Products",
+};
+
 const PetsAndSupplies = () => {
   const [listings, setListings] = useState([]);
   const [filterCategory, setFilterCategory] = useState("All");
+  const [loading, setLoading] = useState(false);
 
-  // Fetch all products
+  // Fetch products based on category
   useEffect(() => {
-    fetch("http://localhost:3000/products/recent") // GET all products
+    setLoading(true);
+    const queryParam = categoryMap[filterCategory]
+      ? `?category=${encodeURIComponent(categoryMap[filterCategory])}`
+      : "";
+    fetch(`http://localhost:3000/products${queryParam}`)
       .then((res) => res.json())
       .then((data) => setListings(data))
-      .catch((err) => console.error("Error fetching listings:", err));
-  }, []);
-
-  // Filter listings based on category
-  const filteredListings =
-    filterCategory === "All"
-      ? listings
-      : listings.filter((item) => item.category === filterCategory);
+      .catch((err) => console.error("Error fetching listings:", err))
+      .finally(() => setLoading(false));
+  }, [filterCategory]);
 
   return (
     <div className="my-10 px-5 container mx-auto">
@@ -26,28 +34,28 @@ const PetsAndSupplies = () => {
       </h2>
 
       {/* Category Filters */}
-      <div className="flex justify-center gap-4 mb-8">
-        {["All", "Pets", "Food", "Accessories", "Care Products"].map(
-          (cat) => (
-            <button
-              key={cat}
-              className={`btn btn-sm ${
-                filterCategory === cat
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-200 text-gray-700"
-              }`}
-              onClick={() => setFilterCategory(cat)}
-            >
-              {cat}
-            </button>
-          )
-        )}
+      <div className="flex justify-center gap-4 mb-8 flex-wrap">
+        {Object.keys(categoryMap).map((cat) => (
+          <button
+            key={cat}
+            className={`btn btn-sm ${
+              filterCategory === cat
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => setFilterCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
       {/* Listing Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {filteredListings.length > 0 ? (
-          filteredListings.map((item) => (
+      {loading ? (
+        <p className="text-center text-gray-500">Loading...</p>
+      ) : listings.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {listings.map((item) => (
             <div
               key={item._id}
               className="card bg-indigo-50 shadow-lg rounded-xl hover:scale-105 hover:bg-indigo-100 transition-transform duration-300"
@@ -81,13 +89,13 @@ const PetsAndSupplies = () => {
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="text-center col-span-full text-gray-500">
-            No listings found.
-          </p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center col-span-full text-gray-500">
+          No listings found.
+        </p>
+      )}
     </div>
   );
 };

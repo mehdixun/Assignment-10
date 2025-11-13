@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
@@ -18,30 +19,48 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // register
-  const createUser = (email, password) => {
+  // 🧩 Register user + update profile
+  const createUser = async (email, password, name, photoURL) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Update display name & photo
+      await updateProfile(result.user, {
+        displayName: name,
+        photoURL: photoURL || "https://i.ibb.co/0fJqL5r/default.png",
+      });
+
+      // Refresh user info
+      setUser({ ...result.user, displayName: name });
+      return result;
+    } catch (error) {
+      console.error("❌ Registration error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // login
+  // 🧩 Login with email
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // google login
+  // 🧩 Google login
   const signInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
-  // logout
+  // 🧩 Logout
   const logout = () => {
     setLoading(true);
     return signOut(auth);
   };
 
+  // 🧩 Auth state observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -53,10 +72,10 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
-    logout,
     createUser,
     signInUser,
     signInWithGoogle,
+    logout,
   };
 
   return (

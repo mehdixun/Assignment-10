@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 const RecentListings = () => {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/products/recent")
       .then((res) => res.json())
-      .then((data) => setListings(data))
+      .then((data) => {
+        
+        const shuffled = [...data].sort(() => Math.random() - 0.5);
+        setListings(shuffled);
+      })
       .catch((err) => console.error("Error fetching listings:", err));
+
+    document.title = "Recent Listings | Pawmart";
   }, []);
 
   return (
     <div className="my-10 px-5 container mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8 text-indigo-600">
-        Recent Pet Listings
+         Recent Pet Listings
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -34,11 +39,15 @@ const RecentListings = () => {
 
             <div className="card-body">
               <h2 className="card-title text-xl font-bold">{pet.name}</h2>
-              <p className="text-gray-500 font-medium">Category: {pet.category}</p>
-              <p className="text-indigo-600 font-semibold">
-                {pet.price && pet.price > 0 ? `${pet.price} Taka` : "Free for Adoption"}
+              <p className="text-gray-500 font-medium">
+                Category: {pet.category}
               </p>
-              <p className="text-gray-400 text-sm mt-1">📍 {pet.location}</p>
+              <p className="text-indigo-600 font-semibold">
+                {pet.price && pet.price > 0
+                  ? `Price: ${pet.price} Taka`
+                  : "Free for Adoption"}
+              </p>
+              <p className="text-gray-400 text-sm mt-1">Location: {pet.location}</p>
 
               <div className="card-actions justify-end mt-4">
                 <Link

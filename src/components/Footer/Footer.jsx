@@ -4,11 +4,13 @@ import { BsTwitterX } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { MdPets } from "react-icons/md";
 
+
 const Footer = () => {
   return (
     <footer className="bg-indigo-50 text-gray-800 py-10">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
-        {/* Logo & About */}
+
+        {/* Website Name */}
         <div className="text-center md:text-left">
           <Link
             to="/"
@@ -24,11 +26,11 @@ const Footer = () => {
         {/* Quick Links */}
         <div className="text-center">
           <h3 className="text-lg font-bold mb-3">Quick Links</h3>
-          <ul className="text-indigo-600 font-semibold space-y-2">
+          <ul className="text-gray-500 font-semibold space-y-2">
             <li>
               <Link
                 to="/"
-                className="hover:border-b-2 inline-block transform hover:scale-105 transition duration-300"
+                className="hover:border-b-2 hover:text-indigo-600 inline-block transform hover:scale-105 transition duration-300"
               >
                 Home
               </Link>
@@ -36,7 +38,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/services"
-                className="hover:border-b-2 inline-block transform hover:scale-105 transition duration-300"
+                className="hover:border-b-2 hover:text-indigo-600 inline-block transform hover:scale-105 transition duration-300"
               >
                 Services
               </Link>
@@ -44,7 +46,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/contact"
-                className="hover:border-b-2 inline-block transform hover:scale-105 transition duration-300"
+                className="hover:border-b-2 hover:text-indigo-600 inline-block transform hover:scale-105 transition duration-300"
               >
                 Contact
               </Link>
@@ -52,7 +54,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/terms"
-                className="hover:border-b-2 inline-block transform hover:scale-105 transition duration-300"
+                className="hover:border-b-2 hover:text-indigo-600 inline-block transform hover:scale-105 transition duration-300"
               >
                 Terms & Conditions
               </Link>
@@ -63,8 +65,8 @@ const Footer = () => {
         {/* Contact & Social */}
         <div className="text-center md:text-left">
           <h3 className="text-lg font-bold mb-3">Contact</h3>
-          <p className="text-indigo-600 font-semibold">Email: pawmart@gmail.com</p>
-          <p className="text-indigo-600 font-semibold">Phone: 01336458100</p>
+          <p className="text-gray-500 font-semibold">Email: pawmart@gmail.com</p>
+          <p className="text-gray-500 font-semibold">Phone: 01336458100</p>
 
           <div className="flex justify-center md:justify-start mt-4 gap-5">
             <a
@@ -89,7 +91,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer Bottom */}
       <div className="mt-10 text-center text-gray-600 text-sm">
         &copy; 2025 PawMart. All rights reserved.
       </div>

@@ -4,6 +4,7 @@ import { MdPets } from "react-icons/md";
 import { AuthContext } from "../../provider/AuthProvider";
 import { toast } from "react-toastify";
 
+
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success("Successfully logged out 👋", {
+      toast.success("Successfully logged out", {
         position: "top-center",
         autoClose: 2000,
       });
@@ -29,6 +30,7 @@ const Navbar = () => {
       isActive ? "border-b-2 border-indigo-600 text-indigo-600" : ""
     }`;
 
+    // Public Navlinks
   const publicLinks = (
     <>
       <li>
@@ -44,6 +46,7 @@ const Navbar = () => {
     </>
   );
 
+  // Private Navkinks
   const privateLinks = (
     <>
       <li>
@@ -76,8 +79,9 @@ const Navbar = () => {
 
   return (
     <div className="bg-indigo-50 shadow-md sticky top-0 z-50">
-      <div className="navbar container mx-auto py-3 px-4 flex justify-between items-center">
-        {/* Logo */}
+      <div className="navbar container mx-auto py-5 px-4 flex justify-between items-center">
+
+        {/* Website Name */}
         <Link
           to="/"
           className="flex items-center gap-2 text-4xl font-bold text-indigo-600 hover:text-indigo-700"
@@ -86,10 +90,9 @@ const Navbar = () => {
           PawMart
         </Link>
 
-        {/* Desktop Links */}
         <ul className="hidden lg:flex space-x-4">{user ? privateLinks : publicLinks}</ul>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile responsive dropdown */}
         <div className="lg:hidden dropdown">
           <div tabIndex={0} className="btn btn-ghost p-2">
             <svg
@@ -115,14 +118,14 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Right Buttons */}
+        {/* Right nav */}
         <div className="flex items-center gap-3">
           {user ? (
             <>
               <img
                 src={user.photoURL || "https://i.ibb.co/Fx2g3mD/user.png"}
-                alt="User Avatar"
-                className="w-10 h-10 rounded-full border-2 border-indigo-400 object-cover"
+                alt=""
+                className="w-10 h-10 rounded-full border-2 border-indigo-500 object-cover"
               />
               <span className="font-medium text-gray-700">{user.displayName || "User"}</span>
               <button
